@@ -50,6 +50,5 @@ int isPrime(int n){
             return 0
         }
    }
-
    return 1;
 }
