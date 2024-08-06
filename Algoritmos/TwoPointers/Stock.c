@@ -18,15 +18,22 @@ int maxProfit(int *prices, int n) {
 }
 
 int maxProfit2(int *prices, int n){
-    int current_profit, max_profit;
+    int current_profit, max_profit = 0;
     int c = 0, v = 0;
     while(v < n && c < n){
         current_profit = prices[v] - prices[c];
+        if(current_profit > max_profit){
+            max_profit = current_profit;
+        }
         if(current_profit < 0){
             c = v;
         }
+
+
         v ++;
     }
+
+    return max_profit;
 }
 
 int main(){
