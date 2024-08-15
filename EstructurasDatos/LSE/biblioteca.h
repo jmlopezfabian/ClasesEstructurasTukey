@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <time.h>
 #include <stdbool.h>
+#include <time.h> 
 
 typedef struct Nodo{
     int num;
@@ -12,6 +12,8 @@ typedef struct Lista{
     int size;
     Nodo* head;
 }Lista;
+
+
 
 Nodo* crearNodo(int x){
     Nodo* nuevo_nodo = (Nodo*) malloc(sizeof(Nodo));
@@ -46,6 +48,10 @@ bool insertarInicio(Lista *l, Nodo* nuevo_nodo){
 
 void insertarFinal(Lista* l, Nodo* nuevo_nod){
     Nodo* aux = l->head;
+    if(l->head == NULL){
+        insertarInicio(l, nuevo_nod);
+        return;
+    }
     while(aux ->sig != NULL){
         aux = aux->sig;
     }
@@ -56,10 +62,16 @@ void insertarFinal(Lista* l, Nodo* nuevo_nod){
 void imprimirLista(Lista *l){
     Nodo* act = l->head;
 
+    if(l->head == NULL){
+        printf("Vacia\n");
+        return;
+    }
+
     while(act != NULL){
         printf("%d ", act->num);
         act = act ->sig;
     }
+    printf("\n");
 }
 
 bool insertarEnN(Lista *l, int n, Nodo* nuevo_nodo){
@@ -84,29 +96,13 @@ bool insertarEnN(Lista *l, int n, Nodo* nuevo_nodo){
     return true;
 }
 
-int main(){
-    srand(time(NULL));
-
-    Nodo* n1 = crearNodo(1);
-    Nodo* n2 = crearNodo(2);
-    Nodo* n3 = crearNodo(3);
-    Nodo* n4 = crearNodo(4);
-    Nodo* n5 = crearNodo(5);
-
-    Lista *l = crearLista();
-
-    insertarInicio(l, n1);
-    insertarInicio(l, n2);
-    insertarInicio(l, n3);
-    //3 -> 2 -> 1 -> 4
-
-    insertarFinal(l,n4);
-    
-    insertarEnN(l,2,n5);
-    
-    imprimirLista(l);
-
-
-
-    printf("\n%d", l->size);
+void copiarLista(Lista *lista_origen, Lista* lista_destino){
+    Nodo* aux = lista_origen->head;
+    while(aux != NULL){
+        Nodo* copia = crearNodo(aux->num);
+        insertarFinal(lista_destino, copia);
+        aux = aux->sig;
+    }
+    lista_destino->size = lista_origen->size;
 }
+
